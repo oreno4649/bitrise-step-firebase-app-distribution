@@ -239,7 +239,17 @@ fi
 echo_details "$submit_cmd"
 echo
 
-eval "${submit_cmd}"
+output=$(eval $submit_cmd)
+echo $output
+
+# output内でURLの位置が変わった場合、`sed -n 2p` の数字を調整する
+FIREBASE_CONSOLE_URL=$(echo $output | grep -Eo "(http|https)://[a-zA-Z0-9./?=-_%:-]*" | sed -n 2p)
+echo "firebase console url:"
+echo $FIREBASE_CONSOLE_URL
+
+FIREBASE_APP_DISTRIBUTION_URL=$(echo $output | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*" | sed -n 3p)
+echo "firebase app distribution url:"
+echo $FIREBASE_APP_DISTRIBUTION_URL
 
 if [ $? -eq 0 ] ; then
     echo_done "Success"
