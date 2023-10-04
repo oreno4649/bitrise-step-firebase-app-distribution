@@ -244,12 +244,12 @@ echo $output
 
 # output内でURLの位置が変わった場合、`sed -n 2p` の数字を調整する
 FIREBASE_CONSOLE_URL=$(echo $output | grep -Eo "(http|https)://[a-zA-Z0-9./?=-_%:-]*" | sed -n 2p)
-echo "firebase console url:"
-echo $FIREBASE_CONSOLE_URL
+echo_info "firebase console url: ${FIREBASE_CONSOLE_URL}"
+envman add --key FIREBASE_CONSOLE_URL --value "${FIREBASE_CONSOLE_URL}"
 
 FIREBASE_APP_DISTRIBUTION_URL=$(echo $output | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*" | sed -n 3p)
-echo "firebase app distribution url:"
-echo $FIREBASE_APP_DISTRIBUTION_URL
+echo_info "firebase app distribution url: ${FIREBASE_APP_DISTRIBUTION_URL}"
+envman add --key FIREBASE_APP_DISTRIBUTION_URL --value "${FIREBASE_APP_DISTRIBUTION_URL}"
 
 if [ $? -eq 0 ] ; then
     echo_done "Success"
